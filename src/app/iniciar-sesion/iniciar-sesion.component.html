@@ -1,0 +1,16 @@
+<body>
+    <div class="container">
+        <form class="login-form" [formGroup]="formLogin" (ngSubmit)="iniciarSesion()">
+
+            <h1>Iniciar Sesión</h1>
+            
+            <label for="usuario">Usuario:</label>
+            <input id="usuario" type="text" placeholder="Usuario" formControlName="usuario" required>
+
+            <label for="clave">Clave:</label>
+            <input id="clave" type="password" placeholder="Contraseña" formControlName="clave" required>
+
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+    </div>
+</body>

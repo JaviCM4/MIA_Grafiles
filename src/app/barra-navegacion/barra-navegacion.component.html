@@ -1,0 +1,19 @@
+<div class="navbar">
+    <div class="left-items">
+        <a routerLink="/pagina-principal">Inicio</a>
+        <a routerLink="/pagina-compartidos">Archivos Compartidos</a>
+        <div *ngIf="rol == 1">
+            <a routerLink="/pagina-papeleria">Papelerias</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a class="dropbtn">Configuración</a>
+        <div class="dropdown-content">
+            <div *ngIf="rol == 1">
+                <a [routerLink]="['/pagina-trabajador', '1']">Crear Usuario</a>
+            </div>
+            <a [routerLink]="['/pagina-trabajador', '2']">Perfil</a>
+            <a href="">Cerrar sesión</a>
+        </div>
+    </div>
+</div>

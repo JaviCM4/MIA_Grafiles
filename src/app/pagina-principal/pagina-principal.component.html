@@ -1,0 +1,138 @@
+<body>
+    <app-barra-navegacion></app-barra-navegacion>
+    <div class="contenedor-principal">
+        <h1>Administrador de Archivos</h1><br>
+        <h3>Fichero Actual: ({{ficheroActual.nombre}})</h3>
+
+        <div *ngIf="!mostrarArchivoEditado">
+            <button class="botones-separacion" (click)="mostrarFormFichero()">Nuevo Fichero</button>
+            <button (click)="mostrarFormArchivo()">Nuevo Archivo</button>
+        </div>
+
+        <!-- Inicio del Apartado para los Form para la Creación de Ficheros y Archivos -->
+        <div *ngIf="mostrarFormularioFichero">
+            <div class="contenedor-formularios">
+                <form class="login-form" [formGroup]="formFichero" (ngSubmit)="crearFichero()">
+            
+                    <h1>Nuevo Fichero</h1>
+                    
+                    <label for="nombre">Nombre del Fichero:</label>
+                    <input id="nombre" type="text" formControlName="nombre" required>
+            
+                    <button type="submit">Guardar</button>
+                </form>
+            </div>
+        </div>
+
+        <div *ngIf="mostrarFormularioArchivo">
+            <div class="contenedor-formularios">
+                <form class="login-form" [formGroup]="formArchivo" (ngSubmit)="crearArchivo()">
+                    <h1>Nuevo Archivo</h1>
+                    
+                    <label for="nombre">Nombre del Archivo:</label>
+                    <input id="nombre" type="text" formControlName="nombre" required>
+
+                    <label for="extension">Selecciona el Tipo de Archivo:</label>
+                    <select id="extension" formControlName="extension" required>
+                        <option value="texto">.txt</option>
+                        <option value="html">.html</option>
+                        <option value="img_1">.jpg</option>
+                        <option value="img_1">.png</option>
+                    </select>
+
+                    <button type="submit">Guardar</button>
+                </form>
+            </div>
+        </div>
+
+        <div *ngIf="mostrarFormularioMover">
+            <div class="contenedor-formularios">
+                <form class="login-form" [formGroup]="formMoverFichero" (ngSubmit)="moverFicheroOArchivo()">
+                    <h1>Mover Archivo</h1>
+                    <label for="posicion">Selecciona el Directorio Destino:</label>
+                    <select id="posicion" formControlName="posicion">
+                        <option value="" disabled selected>Selecciona un tipo de archivo</option>
+                        <option *ngFor="let fichero of ficherosTotal;" [value]="fichero.no">{{ fichero.nombre }}</option>
+                    </select>
+                    <button type="submit">Mover</button>
+                </form>
+                <button (click)="cerrarFormMover()">Cerrar</button>
+            </div>
+        </div>
+
+        <div *ngIf="mostrarFormularioCompartir">
+            <div class="contenedor-formularios">
+                <form class="login-form" [formGroup]="formArchivoCompartido" (ngSubmit)="compartirArchivo()">
+                    <h1>Compartir Archivo</h1>
+                    <label for="usuario">Escriba el Nombre del Usuario Receptor:</label>
+                    <input id="usuario" type="text" formControlName="usuario" required>
+                    <button type="submit">Enviar</button>
+                </form>
+                <button (click)="cerrarFormCompartir()">Cerrar</button>
+            </div>
+        </div>  
+        <!-- Fin del Apartado para los Form para la Creación de Ficheros y Archivos -->
+
+        <div *ngIf="ficheroAnterior && ficheroAnterior != ficheroActual && !mostrarArchivoEditado">
+            <button (click)="irFicheroAnterior()">Fichero Anterior</button>
+        </div>
+
+        <div class="boton-regresar" *ngIf="mostrarArchivoEditado">
+            <button (click)="volverAlFichero()">Regresar</button>
+        </div>
+
+        <div *ngIf="!mostrarArchivoEditado">
+            <div class="prueba">
+            <div class="file-container" *ngFor="let fichero of ficheros; let i = index" (click)="opcionesDelFichero(i)">
+                <img src="/assets/imgs/folder.png" alt="Descripción de la imagen" style="width: 100%; height: auto;">
+                <p class="file-name">{{ fichero.nombre }}</p>
+                <div class="opciones" *ngIf="opcionesFichero[i]">
+                    <button class="boton-opciones" (click)="verFichero(i)">Ver</button>
+                    <button class="boton-opciones" (click)="mostrarTodosLosFicheros(i, 1)">Mover</button>
+                    <button class="boton-opciones" (click)="eliminarFichero(i)">Eliminar</button>
+                </div>
+            </div>
+            </div>
+
+            <div class="prueba">
+            <div class="archivo-container" *ngFor="let archivo of archivos; let i = index" (click)="opcionesDelArchivo(i)">
+                <img src="/assets/imgs/{{ archivo.extension }}.png" alt="Descripción de la imagen" style="width: 100%; height: auto;">
+                <p class="file-name">{{ archivo.nombre }}</p>
+                <div class="opciones" *ngIf="opcionesArchivo[i]">
+                    <button class="boton-opciones" (click)="verArchivo(i)">Ver</button>
+                    <button class="boton-opciones" (click)="mostrarTodosLosFicheros(i, 2)">Mover</button>
+                    <button class="boton-opciones" (click)="copiarArchivo(i)">Copiar</button>
+                    <button class="boton-opciones" (click)="mostrarFormCompartir(i)">Compartir</button>
+                    <button class="boton-opciones" (click)="eliminarArchivo(i)">Eliminar</button>
+                </div>
+            </div>
+            </div>
+
+            <div *ngIf="ficheros.length === 0" class="no-archivos">
+                <br><p>No hay Ficheros Disponibles.</p>
+            </div>
+            <div *ngIf="archivos.length === 0" class="no-archivos">
+                <br><p>No hay Archivos Disponibles.</p>
+            </div>
+        </div>
+
+        <div *ngIf="mostrarArchivoEditado">
+            <div class="contenedor-archivo-editado">
+                <label for="nombre"><strong>Nombre del Archivo: </strong> {{archivoEditado.nombre}}</label>
+                <label for="nombre"><strong>Fecha: </strong> {{archivoEditado.fecha}}</label>
+                <div *ngIf="archivoEditado.extension == 'texto' || archivoEditado.extension == 'html'">
+                    <form class="login-form" [formGroup]="formArchivoEditado" (ngSubmit)="guadarCambiosArchivo()">
+                        <textarea formControlName="contenido"></textarea>
+                        <button type="submit">Guardar</button>
+                    </form>
+                </div>
+                <div *ngIf="archivoEditado.extension == 'img_1' || archivoEditado.extension == 'img_2'">
+                    <br><label for="extension">Seleccione la Imagen que desea Guardar o Actualizar:</label>
+                    <input type="file" (change)="seleccionarImagen($event)" accept="image/*">
+                    <img *ngIf="imagePreview" [src]="imagePreview" alt="Vista previa de la imagen" width="100%" height="500">
+                    <button type="submit" (click)="guardarImagen()">Guardar</button>
+                </div>
+            </div>
+        </div> 
+    </div>
+</body>

@@ -1,0 +1,45 @@
+<body>
+    <app-barra-navegacion></app-barra-navegacion>
+    <div class="container">
+        <div *ngIf="mostrarFormCrear">
+            <form class="login-form" [formGroup]="formCrear" (ngSubmit)="crearTrabajador()">
+                <h1>Crear Trabajador</h1>
+
+                <label for="usuario">Usuario:</label>
+                <input type="text" placeholder="Usuario" formControlName="usuario" required>
+
+                <label for="nombres">Nombres:</label>
+                <input type="text" placeholder="Usuario" formControlName="nombres" required>
+
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" placeholder="Usuario" formControlName="apellidos" required>
+
+                <label for="correo">Correo:</label>
+                <input type="text" placeholder="Usuario" formControlName="correo" required>
+
+                <label for="clave">Clave:</label>
+                <input type="password" placeholder="Contraseña" formControlName="clave" required>
+
+                <button type="submit">Crear Trabajador</button>
+            </form>
+        </div>
+        <div *ngIf="!mostrarFormCrear && trabajadorVista">
+            <form class="login-form" [formGroup]="formActualizar" (ngSubmit)="actualizarDatos()">
+                <h1>Cambio de Contraseña</h1>
+                
+                <label for="usuario"><strong>Usuario:</strong> {{trabajadorVista.usuario}}</label>
+
+                <label for="nombres"><strong>Nombres:</strong> {{trabajadorVista.nombres}}</label>
+
+                <label for="apellidos"><strong>Apellidos:</strong> {{trabajadorVista.apellidos}}</label>
+
+                <br>
+                
+                <label for="clave">Ingrese la Contraseña Nueva:</label>
+                <input type="password" placeholder="Contraseña" formControlName="clave" required>
+
+                <button type="submit">Actualizar</button>
+            </form>
+        </div>
+    </div>
+</body>

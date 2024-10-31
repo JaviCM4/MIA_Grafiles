@@ -1,0 +1,41 @@
+<body>
+    <app-barra-navegacion></app-barra-navegacion>
+    <div class="contenedor-principal">
+        <h1>Papeleria</h1>
+        <div *ngIf="!mostrarVista">
+            <div *ngIf="!mostrarArchivos">
+                <div class="directorios-personales" *ngFor="let trabajador of trabajadores; let i = index" (click)="opcionesDelFicheroUsuario(i)">
+                    <div class="file-container">
+                        <img src="/assets/imgs/folder.png" alt="Descripción de la imagen" style="width: 100%; height: auto;">
+                        <div class="opciones" *ngIf="opcionesArchivoPapeleria[i]">
+                            <button class="boton-opciones" (click)="mostrarListaArchivosUsuario(i)">Ver</button>
+                        </div>
+                    </div>
+                    <p class="file-name">{{trabajador.nombres}} {{trabajador.apellidos}}</p>
+                </div>
+            </div>
+            <div *ngIf="mostrarArchivos">
+                <button (click)="quitarVistaLista()">Ver Lista de Trabajadores</button>
+                <div class="file-container" *ngFor="let archivo of archivos; let i = index" (click)="opcionesDelArchivoIndividual(i)">
+                    <img src="/assets/imgs/{{ archivo.extension }}.png" alt="Descripción de la imagen" style="width: 100%; height: auto;">
+                    <p class="file-name">{{ archivo.nombre }}</p>
+                    <div class="opciones" *ngIf="opcionesArchivoIndividual[i]">
+                        <button class="boton-opciones" (click)="verArchivo(i)">Ver</button>
+                    </div>
+                </div>
+                <div *ngIf="archivos.length === 0" class="no-archivos">
+                    <br><p>No tiene Archivos Eliminados.</p>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="mostrarVista">
+            <button (click)="quitarVistaArchivo()">Ver Lista de Archivos</button>
+        </div>
+        <div *ngIf="mostrarVista" class="contenedor-vista">
+            <label *ngIf="archivoVista"><strong>Nombre de Archivo:</strong> {{ archivoVista.nombre }}</label>
+            <label *ngIf="archivoVista"><strong>Fecha de Eliminación:</strong> {{ archivoVista.fecha }}</label>
+            <textarea *ngIf="archivoVista" readonly>{{ archivoVista.contenido }}</textarea>
+        </div>
+    </div>
+</body>

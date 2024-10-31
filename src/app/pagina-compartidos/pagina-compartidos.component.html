@@ -1,0 +1,35 @@
+<body>
+    <app-barra-navegacion></app-barra-navegacion>
+    <div class="contenedor-principal">
+        <h1>Archivos Compartidos</h1>
+
+        <div *ngIf="!mostrarVista">
+            <div class="file-container" *ngFor="let archivo of compartidos; let i = index" (click)="opcionesDelArchivoCompartido(i)">
+                <img src="/assets/imgs/{{ archivo.extension }}.png" alt="Descripción de la imagen" style="width: 100%; height: auto;">
+                <p class="file-name">{{ archivo.nombre }}</p>
+                <div class="opciones" *ngIf="opcionesArchivoCompartido[i]">
+                    <button class="boton-opciones" (click)="verArchivo(i)">Ver</button>
+                    <button class="boton-opciones" (click)="eliminarArchivo(i)">Eliminar</button>
+                </div>
+            </div>
+            <div *ngIf="compartidos.length === 0" class="no-archivos">
+                <p>No hay archivos compartidos disponibles.</p>
+            </div>
+        </div>
+
+        <div *ngIf="mostrarVista">
+            <button (click)="quitarVistaArchivo()">Ver Lista de Archivos</button>
+        </div>
+        <div *ngIf="mostrarVista" class="contenedor-vista">
+            <label *ngIf="compartidoVista"><strong>Nombre de Archivo:</strong> {{ compartidoVista.nombre }}</label>
+            <label *ngIf="compartidoVista"><strong>Usuario Emisor:</strong> {{ compartidoVista.emisor }}</label>
+            <label *ngIf="compartidoVista"><strong>Fecha:</strong> {{ compartidoVista.fecha }}</label>
+            <div *ngIf="compartidoVista.extension == 'texto' || compartidoVista.extension == 'html'">
+                <textarea *ngIf="compartidoVista" readonly>{{ compartidoVista.contenido }}</textarea>
+            </div>
+            <div *ngIf="compartidoVista.extension == 'img_1'">
+                <img *ngIf="imagePreview" [src]="imagePreview" alt="Vista previa de la imagen" width="100%" height="500">
+            </div>   
+        </div>
+    </div>
+</body>

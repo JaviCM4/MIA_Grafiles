@@ -109,6 +109,20 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+.button {
+    margin-top: 10px;
+    background-color: #e71c1c;
+}
+.button:hover {
+    background-color: #920404;
+}
+.boton-regresar {
+    margin-bottom: 10px;
+    background-color: #e71cc5;
+}
+.boton-regresar:hover {
+    background-color: #7a0370;
+}
 
 .boton-opciones {
     margin: 5px 0;
@@ -126,9 +140,6 @@ button:hover {
 
 .botones-separacion {
     margin-right: 10px;
-    margin-bottom: 10px;
-}
-.boton-regresar {
     margin-bottom: 10px;
 }
 

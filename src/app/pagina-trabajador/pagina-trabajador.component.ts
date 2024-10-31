@@ -95,14 +95,19 @@ export class PaginaTrabajadorComponent implements OnInit {
       usuario: this.usuario,
       clave: this.formActualizar.value.clave
     }
-    this.trabajadorService.actualizarContraseña(credencialAActualizar).subscribe({
-      next: (respuesta: any) => {
-        alert(respuesta.mensaje)
-        this.formActualizar.reset()
-      },
-      error: (error: any) => {
-        console.error("Error al eliminar los Ficheros: " + error)
-      }
-    })
+
+    if (this.formActualizar.valid) {
+      this.trabajadorService.actualizarContraseña(credencialAActualizar).subscribe({
+        next: (respuesta: any) => {
+          alert(respuesta.mensaje)
+          this.formActualizar.reset()
+        },
+        error: (error: any) => {
+          console.error("Error al eliminar los Ficheros: " + error)
+        }
+      })
+    } else {
+      alert("Debe colocar su Contraseña")
+    }
   }
 }

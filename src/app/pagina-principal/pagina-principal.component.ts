@@ -332,6 +332,8 @@ export class PaginaPrincipalComponent implements OnInit {
     this.archivoService.copiarArchivoExistente(this.archivos[indice].no).subscribe({
       next: (respuesta: any) => {
         alert("Mensajes: " + respuesta.mensaje)
+        this.obtenerFicheros()
+        this.obtenerArchivos()
       },
       error: (error: any) => {
         console.error("Error al eliminar los Archivos: " + error)

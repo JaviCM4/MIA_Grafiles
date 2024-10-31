@@ -56,7 +56,7 @@
                     </select>
                     <button type="submit">Mover</button>
                 </form>
-                <button (click)="cerrarFormMover()">Cerrar</button>
+                <button class="button" (click)="cerrarFormMover()">Cerrar</button>
             </div>
         </div>
 
@@ -68,17 +68,17 @@
                     <input id="usuario" type="text" formControlName="usuario" required>
                     <button type="submit">Enviar</button>
                 </form>
-                <button (click)="cerrarFormCompartir()">Cerrar</button>
+                <button class="button" (click)="cerrarFormCompartir()">Cerrar</button>
             </div>
         </div>  
         <!-- Fin del Apartado para los Form para la Creación de Ficheros y Archivos -->
 
         <div *ngIf="ficheroAnterior && ficheroAnterior != ficheroActual && !mostrarArchivoEditado">
-            <button (click)="irFicheroAnterior()">Fichero Anterior</button>
+            <button class="boton-regresar" (click)="irFicheroAnterior()">Fichero Anterior</button>
         </div>
 
-        <div class="boton-regresar" *ngIf="mostrarArchivoEditado">
-            <button (click)="volverAlFichero()">Regresar</button>
+        <div *ngIf="mostrarArchivoEditado">
+            <button class="boton-regresar" (click)="volverAlFichero()">Regresar</button>
         </div>
 
         <div *ngIf="!mostrarArchivoEditado">
